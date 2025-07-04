@@ -15,41 +15,37 @@ public class PasswordValidator {
         // ...
         
         int minLength = 8; // TODO: มีอะไรขาดหายไปที่บรรทัดนี้?
-        if(password.length()<8 || password==null)
-            return PasswordStrength.INVALID;
+        if (password == null || password.length() < 8 ){
+        return PasswordStrength.INVALID;
+        }
 
 
-            boolean lower=false;
-            boolean digit = false;
+            boolean digit=false;
             boolean upper = false;
-            boolean special = false;
+            boolean special= false;
+            boolean lower = false;
 
             for(char c: password.toCharArray()){
-                if(Character.isDigit(c)){
-                digit = true;
+                if(Character.isLowerCase(c)){
+                lower = true;
             }
             else if(Character.isUpperCase(c)){
                 upper = true;
             }
-            else if(!Character.isLowerCase(c)){
-                lower=true;
+            else if(Character.isDigit(c)){
+                digit=true;
                 
                 
             }else {
                 special=true;
             }
-
-            if(!digit && !upper && !special && lower){
-                return PasswordStrength.WEAK;
-            }
-            if(!digit && upper && !special && lower){
-                return PasswordStrength.MEDIUM;
-            }
-            if(digit && upper && special && lower){
-                return PasswordStrength.STRONG;
-            }
-
         }
+
+            if(lower&& !upper && !digit && !special) return PasswordStrength.WEAK;
+            if(lower&& upper && !digit && !special ) return PasswordStrength.MEDIUM; 
+            if(lower&& upper && digit && special) return PasswordStrength.STRONG;
+
+        
         
         
         return PasswordStrength.INVALID ; // TODO: การคืนค่านี้ถูกต้องหรือไม่?
